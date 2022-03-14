@@ -6,7 +6,7 @@ import exceptions.MalformedExpressionException;
 import java.util.EmptyStackException;
 
 public class CalculatorVisitor implements Calculator, Visitor {
-    private LinkedStack<Operand> tokenStack;
+    private final LinkedStack<Operand> tokenStack;
 
     public CalculatorVisitor() {
         tokenStack = new LinkedStack<>();
@@ -17,8 +17,16 @@ public class CalculatorVisitor implements Calculator, Visitor {
     }
 
     private void performOperation(Operator operator) throws MalformedExpressionException {
-        Operand left = tokenStack.pop();
-        Operand right = tokenStack.pop();
+
+
+        Operand right;
+        Operand left;
+        try {
+            right = tokenStack.pop();
+            left = tokenStack.pop();
+        } catch (EmptyStackException e) {
+            throw new MalformedExpressionException(e.getMessage());
+        }
 
         int result;
         switch (operator.getOperation()){
@@ -34,8 +42,12 @@ public class CalculatorVisitor implements Calculator, Visitor {
 
     @Override
     public int getResult() throws MalformedExpressionException {
+
         try {
             Operand result = tokenStack.pop();
+            if(!tokenStack.isEmpty()){
+                throw new MalformedExpressionException("Leftover operands!");
+            }
             return result.getValue();
         } catch (EmptyStackException e) {
             throw new MalformedExpressionException(e.getMessage());
@@ -54,4 +66,6 @@ public class CalculatorVisitor implements Calculator, Visitor {
         } catch (MalformedExpressionException ignored) {
         }
     }
+
+
 }
