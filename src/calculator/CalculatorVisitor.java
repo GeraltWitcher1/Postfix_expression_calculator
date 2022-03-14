@@ -29,10 +29,10 @@ public class CalculatorVisitor implements Calculator, Visitor {
         }
 
         int result;
-        switch (operator.getOperation()){
-            case ADD -> result=(left.getValue()+right.getValue());
-            case SUBTRACT -> result=(left.getValue()- right.getValue());
-            case MULTIPLY -> result=(left.getValue())* right.getValue();
+        switch (operator.getOperation()) {
+            case ADD -> result = (left.getValue() + right.getValue());
+            case SUBTRACT -> result = (left.getValue() - right.getValue());
+            case MULTIPLY -> result = (left.getValue()) * right.getValue();
             default -> throw new MalformedExpressionException("Check your expression");
         }
 
@@ -45,7 +45,7 @@ public class CalculatorVisitor implements Calculator, Visitor {
 
         try {
             Operand result = tokenStack.pop();
-            if(!tokenStack.isEmpty()){
+            if (!tokenStack.isEmpty()) {
                 throw new MalformedExpressionException("Leftover operands!");
             }
             return result.getValue();

@@ -15,12 +15,12 @@ class CalculatorVisitorTest {
     }
 
     @Test
-    void getResultException() {
+    void getResultExceptionEmpty() {
         assertThrows(MalformedExpressionException.class, calculatorVisitor::getResult);
     }
 
     @Test
-    void getResultExceptionLeftover() {
+    void getResultExceptionBadInput() {
         Operand operand = new Operand(1);
         Operator operator = new Operator(Operation.MULTIPLY);
         operand.accept(calculatorVisitor);
